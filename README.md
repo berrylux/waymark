@@ -13,6 +13,8 @@ Waymark takes care of all navigation in iOS app including:
 * URL based navigation (besides non-URL based) for handling of external navigation requests (from pushes or other aps)
 * support of different types of menus simultaneously (no menu, hamburger menu, tab bar menu)
 * support of modal presentation with priority levels
+* support custom transitions;
+* support percentage driven transitions.
 
 
 ## Architesture (Suggestion)
