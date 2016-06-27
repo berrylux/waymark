@@ -36,17 +36,14 @@ public struct Waymark {
         root = aRoot
     }
     
-    public static func navigateTo(screen: Screen, transition: Transition, animated: Bool = false, context: Context? = nil, completion: (() -> ())? = nil) {
+    public static func push(screen: Screen, animated: Bool = false, context: Context? = nil, completion: (() -> ())? = nil) {
         let viewController = screen.construct(context)
-        
-        switch transition {
-        case .Push:
-            root?.top.navigationController?.pushViewController(viewController, animated: animated, completion: completion)
-            break
-        case .Present:
-            root?.top.presentViewController(viewController, animated: animated, completion: completion)
-            break
-        }
+        root?.top.navigationController?.pushViewController(viewController, animated: animated, completion: completion)
+    }
+    
+    public static func present(screen: Screen, animated: Bool = false, context: Context? = nil, completion: (() -> ())? = nil) {
+        let viewController = screen.construct(context)
+        root?.top.presentViewController(viewController, animated: animated, completion: completion)
     }
     
     public static func dismiss(animated: Bool = false, completion: (() -> ())? = nil) {
