@@ -36,13 +36,15 @@ public struct Waymark {
         root = aRoot
     }
     
-    public static func push(screen: Screen, animated: Bool = false, context: Context? = nil, completion: (() -> ())? = nil) {
+    public static func push(screen: Screen, animated: Bool = false, context: Context? = nil, @noescape presetup: (UIViewController) -> () = { _ in }, completion: (() -> ())? = nil) {
         let viewController = screen.construct(context)
+        presetup(viewController)
         root?.top.navigationController?.pushViewController(viewController, animated: animated, completion: completion)
     }
     
-    public static func present(screen: Screen, animated: Bool = false, context: Context? = nil, completion: (() -> ())? = nil) {
+    public static func present(screen: Screen, animated: Bool = false, context: Context? = nil, @noescape presetup: (UIViewController) -> () = { _ in }, completion: (() -> ())? = nil) {
         let viewController = screen.construct(context)
+        presetup(viewController)
         root?.top.presentViewController(viewController, animated: animated, completion: completion)
     }
     
