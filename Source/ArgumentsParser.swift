@@ -1,5 +1,5 @@
 //
-//  Route.swift
+//  ArgumentsParser.swift
 //
 //  Copyright (c) 2016 Berrylux
 //
@@ -22,13 +22,21 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
+public protocol ArgumentsParser {
+    func format(path: String) -> String
+    func parse(path: String, _ format: String) -> [String: AnyObject]
+}
 
-public struct Route {
-    public var path: String!
-    public var format: String!
-    public var screen: Screen!
-    public var transition: Transition!
-    public var argumentsParser: ArgumentsParser!
-    public var argumentsProcessor: ArgumentsProcessor!
+public extension ArgumentsParser {
+    
+    public func format(path: String) -> String {
+        // TODO: Path to format
+        return path
+    }
+    
+    public func parse(path: String, _ format: String) -> [String: AnyObject] {
+        // TODO: Write default implementation of the praser
+        return [:]
+    }
+    
 }

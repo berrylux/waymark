@@ -28,6 +28,7 @@ public struct Waymark {
     
     // MARK: - Types
     
+    private struct DefaultArgumentsParser: ArgumentsParser {}
     private struct DefaultArgumentsProcessor: ArgumentsProcessor {}
     
     // MARK: - Vars
@@ -36,6 +37,7 @@ public struct Waymark {
     
     private static var routes = [Route]()
     
+    private static var defaultArgumentsParser = DefaultArgumentsParser()
     private static var defaultArgumentsProcessor = DefaultArgumentsProcessor()
     
     // MARK: - Setup
@@ -75,9 +77,19 @@ public struct Waymark {
     
     // MARK: - Routes
     
-    public static func addPath(path: String, screen: Screen, transition: Transition, argumentsProcessor: ArgumentsProcessor? = nil) {
+    public static func addPath(path: String, screen: Screen, transition: Transition, anArgumentsParser: ArgumentsParser? = nil, anArgumentsProcessor: ArgumentsProcessor? = nil) {
         if getRoute(path) == nil {
-            let route = Route(path: path, screen: screen, transition: transition, argumentsProcessor: argumentsProcessor ?? defaultArgumentsProcessor)
+            let argumentsParser = anArgumentsParser ?? defaultArgumentsParser
+            let argumentsProcessor = anArgumentsProcessor ?? defaultArgumentsProcessor
+            let route = Route(
+                path: path,
+                format: argumentsParser.format(path),
+                screen: screen,
+                transition: transition,
+                argumentsParser: argumentsParser,
+                argumentsProcessor: argumentsProcessor
+            )
+            
             routes.append(route)
         } else {
             print("Failed to create and add route with path: \(path). Route with this path already exists.")
@@ -89,14 +101,14 @@ public struct Waymark {
     }
     
     public static func processPath(path: String) {
+        // TODO: Logic to find route by path
         guard let route = getRoute(path) else { return }
-        processRoute(route)
+        processPath(path, route: route)
     }
     
-    private static func processRoute(route: Route) {
-        // TODO: build ArgumentsParser
-        let arguments = ["": ""]
-        let context = route.argumentsProcessor?.resolve(arguments)
+    private static func processPath(path: String, route: Route) {
+        let arguments = route.argumentsParser.parse(path, route.format)
+        let context = route.argumentsProcessor.resolve(arguments)
         
         processTransition(route.transition, screen: route.screen, context: context)
     }
