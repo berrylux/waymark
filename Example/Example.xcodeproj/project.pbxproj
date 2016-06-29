@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B9A0587A1D23DCC800F77497 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A058791D23DCC800F77497 /* Transition.swift */; };
 		B9A0587C1D23DD4500F77497 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A0587B1D23DD4500F77497 /* Route.swift */; };
+		B9A058821D23E4A800F77497 /* ArgumentsProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A058811D23E4A800F77497 /* ArgumentsProcessor.swift */; };
 		F0BF1C7D1D21CEBF00F5B42B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF1C7C1D21CEBF00F5B42B /* AppDelegate.swift */; };
 		F0BF1C7F1D21CEBF00F5B42B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF1C7E1D21CEBF00F5B42B /* ViewController.swift */; };
 		F0BF1C821D21CEBF00F5B42B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0BF1C801D21CEBF00F5B42B /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		B9A058791D23DCC800F77497 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
 		B9A0587B1D23DD4500F77497 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		B9A058811D23E4A800F77497 /* ArgumentsProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgumentsProcessor.swift; sourceTree = "<group>"; };
 		F0BF1C791D21CEBF00F5B42B /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0BF1C7C1D21CEBF00F5B42B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0BF1C7E1D21CEBF00F5B42B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				F0BF1CA51D21D07C00F5B42B /* Waymark.swift */,
 				B9A058791D23DCC800F77497 /* Transition.swift */,
 				B9A0587B1D23DD4500F77497 /* Route.swift */,
+				B9A058811D23E4A800F77497 /* ArgumentsProcessor.swift */,
 			);
 			name = Source;
 			path = ../../Source;
@@ -168,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9A058821D23E4A800F77497 /* ArgumentsProcessor.swift in Sources */,
 				B9A0587A1D23DCC800F77497 /* Transition.swift in Sources */,
 				F0BF1CAB1D21D07C00F5B42B /* UIViewControllerExtensions.swift in Sources */,
 				F0BF1CAC1D21D07C00F5B42B /* Waymark.swift in Sources */,

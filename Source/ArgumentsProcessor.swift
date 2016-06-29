@@ -1,5 +1,5 @@
 //
-//  Route.swift
+//  ArgumentsProcessor.swift
 //
 //  Copyright (c) 2016 Berrylux
 //
@@ -22,11 +22,12 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
+public protocol ArgumentsProcessor {
+    func resolve(arguments: [String: AnyObject]) -> Context
+}
 
-public struct Route {
-    public var path: String!
-    public var screen: Screen!
-    public var transition: Transition!
-    public var argumentsProcessor: ArgumentsProcessor?
+public extension ArgumentsProcessor {
+    public func resolve(arguments: [String: AnyObject]) -> Context {
+        return arguments
+    }
 }

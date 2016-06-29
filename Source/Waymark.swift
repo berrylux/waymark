@@ -26,11 +26,17 @@ import UIKit
 
 public struct Waymark {
     
+    // MARK: - Types
+    
+    private struct DefaultArgumentsProcessor: ArgumentsProcessor {}
+    
     // MARK: - Vars
     
     private static var root: UINavigationController?
     
     private static var routes = [Route]()
+    
+    private static var defaultArgumentsProcessor = DefaultArgumentsProcessor()
     
     // MARK: - Setup
     
@@ -69,9 +75,9 @@ public struct Waymark {
     
     // MARK: - Routes
     
-    public static func addPath(path: String, screen: Screen, transition: Transition) {
+    public static func addPath(path: String, screen: Screen, transition: Transition, argumentsProcessor: ArgumentsProcessor? = nil) {
         if getRoute(path) == nil {
-            let route = Route(path: path, screen: screen, transition: transition)
+            let route = Route(path: path, screen: screen, transition: transition, argumentsProcessor: argumentsProcessor ?? defaultArgumentsProcessor)
             routes.append(route)
         } else {
             print("Failed to create and add route with path: \(path). Route with this path already exists.")
@@ -88,7 +94,11 @@ public struct Waymark {
     }
     
     private static func processRoute(route: Route) {
-        processTransition(route.transition, screen: route.screen)
+        // TODO: build ArgumentsParser
+        let arguments = ["": ""]
+        let context = route.argumentsProcessor?.resolve(arguments)
+        
+        processTransition(route.transition, screen: route.screen, context: context)
     }
     
     public static func getRoute(path: String) -> Route? {
