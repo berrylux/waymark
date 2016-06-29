@@ -30,26 +30,69 @@ public struct Waymark {
     
     private static var root: UINavigationController?
     
-    // MARK: - Methods
+    private static var routes = [Route]()
+    
+    // MARK: - Setup
     
     public static func setup(aRoot: UINavigationController) {
         root = aRoot
     }
     
-    public static func push(screen: Screen, animated: Bool = false, context: Context? = nil, @noescape presetup: (UIViewController) -> () = { _ in }, completion: (() -> ())? = nil) {
-        let viewController = screen.construct(context)
-        presetup(viewController)
-        root?.top.navigationController?.pushViewController(viewController, animated: animated, completion: completion)
+    // MARK: - Transitioning
+    
+    public static func push(screen: Screen, context: Context? = nil, animated: Bool = false, completion: (() -> ())? = nil) {
+        let transition = Transition.Push(animated: animated, completion: completion)
+        processTransition(transition, screen: screen, context: context)
     }
     
-    public static func present(screen: Screen, animated: Bool = false, context: Context? = nil, @noescape presetup: (UIViewController) -> () = { _ in }, completion: (() -> ())? = nil) {
+    public static func present(screen: Screen, context: Context? = nil, animated: Bool = false, completion: (() -> ())? = nil) {
+        let transition = Transition.Present(animated: animated, completion: completion)
+        processTransition(transition, screen: screen, context: context)
+    }
+    
+    private static func processTransition(transition: Transition, screen: Screen, context: Context? = nil) {
         let viewController = screen.construct(context)
-        presetup(viewController)
-        root?.top.presentViewController(viewController, animated: animated, completion: completion)
+        
+        switch transition {
+        case let .Push(animated, completion):
+            root?.pushViewController(viewController, animated: animated, completion: completion)
+            break
+        case let .Present(animated, completion):
+            root?.top.presentViewController(viewController, animated: animated, completion: completion)
+            break
+        }
     }
     
     public static func dismiss(animated: Bool = false, completion: (() -> ())? = nil) {
         root?.top.dismissViewControllerAnimated(animated, completion: completion)
+    }
+    
+    // MARK: - Routes
+    
+    public static func addPath(path: String, screen: Screen, transition: Transition) {
+        if getRoute(path) == nil {
+            let route = Route(path: path, screen: screen, transition: transition)
+            routes.append(route)
+        } else {
+            print("Failed to create and add route with path: \(path). Route with this path already exists.")
+        }
+    }
+    
+    public static func processUrl(url: NSURL) {
+        processPath(url.absoluteString)
+    }
+    
+    public static func processPath(path: String) {
+        guard let route = getRoute(path) else { return }
+        processRoute(route)
+    }
+    
+    private static func processRoute(route: Route) {
+        processTransition(route.transition, screen: route.screen)
+    }
+    
+    public static func getRoute(path: String) -> Route? {
+        return routes.filter { $0.path == path }.first
     }
     
 }
