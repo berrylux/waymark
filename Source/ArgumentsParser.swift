@@ -22,21 +22,72 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 public protocol ArgumentsParser {
-    func format(path: String) -> String
-    func parse(path: String, _ format: String) -> [String: AnyObject]
+    mutating func format(path: String) -> String
+    func parse(path: String, _ format: String) -> [String: AnyObject]?
 }
 
-public extension ArgumentsParser {
+public struct DefaultArgumentsParser: ArgumentsParser {
     
-    public func format(path: String) -> String {
-        // TODO: Path to format
-        return path
+    // MARK: - Vars
+    
+    public var argumentsTitles: [String] = []
+    
+    // MARK: - ArgumentsParser
+    
+    public mutating func format(path: String) -> String {
+        var format = path.stringByReplacingOccurrencesOfString("/", withString: "\\/").stringByReplacingOccurrencesOfString("?", withString: "\\?")
+        var argumentRanges = [Range<Int>]()
+        
+        var latestRange: Range<Int>?
+        for (charIdx, char) in format.characters.enumerate() {
+            if char == "{" {
+                latestRange = charIdx ... charIdx
+            } else if char == "}", var range = latestRange {
+                range.endIndex = charIdx
+                argumentRanges.append(range)
+                latestRange = nil
+            }
+        }
+        
+        let initialFormatLength = format.characters.count
+        
+        // TODO: Extend regex?, maybe change to (\\w+)
+        let regexAny = "([а-яА-Яa-zA-Z0-9_]+)"
+        for range in argumentRanges {
+            let advanceBy = format.characters.count - initialFormatLength
+            
+            let startIndex = format.characters.startIndex.advancedBy(range.startIndex + advanceBy)
+            let endIndex = format.characters.startIndex.advancedBy(range.endIndex + advanceBy)
+            let range = startIndex ... endIndex
+            
+            argumentsTitles.append(format.substringWithRange(range).remove("{}"))
+            format = format.stringByReplacingCharactersInRange(range, withString: regexAny)
+        }
+        
+        return format
     }
     
-    public func parse(path: String, _ format: String) -> [String: AnyObject] {
-        // TODO: Write default implementation of the praser
-        return [:]
+    public func parse(path: String, _ format: String) -> [String: AnyObject]? {
+        do {
+            let regex = try NSRegularExpression(pattern: format, options: NSRegularExpressionOptions.CaseInsensitive)
+            let range = NSMakeRange(0, path.characters.count)
+            if let textCheckingResults = regex.firstMatchInString(path, options: [], range: range) where textCheckingResults.numberOfRanges > 1 {
+                
+                var values = [String: AnyObject]()
+                
+                for index in 1 ..< textCheckingResults.numberOfRanges where index <= argumentsTitles.count {
+                    let title = argumentsTitles[index - 1]
+                    values[title] = path.substringWithRange(textCheckingResults.rangeAtIndex(index))
+                }
+                
+                return values
+                
+            }
+        } catch {}
+        
+        return nil
     }
-    
 }

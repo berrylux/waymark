@@ -26,19 +26,11 @@ import UIKit
 
 public struct Waymark {
     
-    // MARK: - Types
-    
-    private struct DefaultArgumentsParser: ArgumentsParser {}
-    private struct DefaultArgumentsProcessor: ArgumentsProcessor {}
-    
     // MARK: - Vars
     
     private static var root: UINavigationController?
     
     private static var routes = [Route]()
-    
-    private static var defaultArgumentsParser = DefaultArgumentsParser()
-    private static var defaultArgumentsProcessor = DefaultArgumentsProcessor()
     
     // MARK: - Setup
     
@@ -79,11 +71,10 @@ public struct Waymark {
     
     public static func addPath(path: String, screen: Screen, transition: Transition, anArgumentsParser: ArgumentsParser? = nil, anArgumentsProcessor: ArgumentsProcessor? = nil) {
         if getRoute(path) == nil {
-            let argumentsParser = anArgumentsParser ?? defaultArgumentsParser
-            let argumentsProcessor = anArgumentsProcessor ?? defaultArgumentsProcessor
+            let argumentsParser = anArgumentsParser ?? DefaultArgumentsParser()
+            let argumentsProcessor = anArgumentsProcessor ?? DefaultArgumentsProcessor()
             let route = Route(
                 path: path,
-                format: argumentsParser.format(path),
                 screen: screen,
                 transition: transition,
                 argumentsParser: argumentsParser,
@@ -97,20 +88,13 @@ public struct Waymark {
     }
     
     public static func processUrl(url: NSURL) {
-        processPath(url.absoluteString)
-    }
-    
-    public static func processPath(path: String) {
-        // TODO: Logic to find route by path
-        guard let route = getRoute(path) else { return }
-        processPath(path, route: route)
-    }
-    
-    private static func processPath(path: String, route: Route) {
-        let arguments = route.argumentsParser.parse(path, route.format)
-        let context = route.argumentsProcessor.resolve(arguments)
+        let path = url.absoluteString
         
-        processTransition(route.transition, screen: route.screen, context: context)
+        for route in routes {
+            if let context = route.getContext(path) {
+                processTransition(route.transition, screen: route.screen, context: context)
+            }
+        }
     }
     
     public static func getRoute(path: String) -> Route? {

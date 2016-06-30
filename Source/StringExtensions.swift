@@ -1,5 +1,5 @@
 //
-//  Route.swift
+//  StringExtensions.swift
 //
 //  Copyright (c) 2016 Berrylux
 //
@@ -22,39 +22,17 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
+import Foundation
 
-public struct Route {
+public extension String {
     
-    // MARK: - Vars
-    
-    public var path: String!
-    public var screen: Screen!
-    public var transition: Transition!
-    private var argumentsParser: ArgumentsParser!
-    private var argumentsProcessor: ArgumentsProcessor!
-    
-    public var format: String!
-    
-    // MARK: - Constructors
-    
-    init(path: String, screen: Screen, transition: Transition, argumentsParser: ArgumentsParser, argumentsProcessor: ArgumentsProcessor) {
-        self.path = path
-        self.screen = screen
-        self.transition = transition
-        self.argumentsParser = argumentsParser
-        self.argumentsProcessor = argumentsProcessor
-        
-        format = self.argumentsParser.format(path)
+    public func substringWithRange(range: NSRange) -> String {
+        return (self as NSString).substringWithRange(range)
     }
     
-    // MARK: - Methods
-    
-    func getContext(path: String) -> Context? {
-        if let arguments = argumentsParser.parse(path, format) {
-            return argumentsProcessor.resolve(arguments)
-        }
-        return nil
+    public func remove(chars: String) -> String {
+        let toRemove = NSCharacterSet(charactersInString: chars)
+        return self.componentsSeparatedByCharactersInSet(toRemove).joinWithSeparator("")
     }
     
 }

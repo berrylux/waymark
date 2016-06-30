@@ -31,3 +31,5 @@ public extension ArgumentsProcessor {
         return arguments
     }
 }
+
+public struct DefaultArgumentsProcessor: ArgumentsProcessor {}
