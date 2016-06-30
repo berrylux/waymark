@@ -93,6 +93,7 @@ public struct Waymark {
         for route in routes {
             if let context = route.getContext(path) {
                 processTransition(route.transition, screen: route.screen, context: context)
+                break
             }
         }
     }
