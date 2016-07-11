@@ -25,5 +25,5 @@
 import UIKit
 
 public protocol Screen {
-    var construct: (Context?) -> UIViewController { get }
+    static func construct(context: Context?) -> UIViewController
 }

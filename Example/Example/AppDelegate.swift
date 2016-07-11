@@ -22,6 +22,8 @@ class AppDelegate: UIResponder {
 extension AppDelegate: UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        Waymark.setup(self.window?.rootViewController as! UINavigationController)
+        Waymark.push(ViewController.self, context: nil, animated: true, completion: nil)
         return true
     }
     

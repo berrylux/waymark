@@ -29,7 +29,7 @@ public struct Route {
     // MARK: - Vars
     
     public var path: String!
-    public var screen: Screen!
+    public var screen: Screen.Type!
     public var transition: Transition!
     private var argumentsParser: ArgumentsParser!
     private var argumentsProcessor: ArgumentsProcessor!
@@ -38,7 +38,7 @@ public struct Route {
     
     // MARK: - Constructors
     
-    init(path: String, screen: Screen, transition: Transition, argumentsParser: ArgumentsParser, argumentsProcessor: ArgumentsProcessor) {
+    init(path: String, screen: Screen.Type, transition: Transition, argumentsParser: ArgumentsParser, argumentsProcessor: ArgumentsProcessor) {
         self.path = path
         self.screen = screen
         self.transition = transition

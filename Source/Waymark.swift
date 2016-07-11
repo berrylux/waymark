@@ -40,17 +40,17 @@ public struct Waymark {
     
     // MARK: - Transitioning
     
-    public static func push(screen: Screen, context: Context? = nil, animated: Bool = false, completion: (() -> ())? = nil) {
+    public static func push(screen: Screen.Type, context: Context? = nil, animated: Bool = false, completion: (() -> ())? = nil) {
         let transition = Transition.Push(animated: animated, completion: completion)
         processTransition(transition, screen: screen, context: context)
     }
     
-    public static func present(screen: Screen, context: Context? = nil, animated: Bool = false, completion: (() -> ())? = nil) {
+    public static func present(screen: Screen.Type, context: Context? = nil, animated: Bool = false, completion: (() -> ())? = nil) {
         let transition = Transition.Present(animated: animated, completion: completion)
         processTransition(transition, screen: screen, context: context)
     }
     
-    private static func processTransition(transition: Transition, screen: Screen, context: Context? = nil) {
+    private static func processTransition(transition: Transition, screen: Screen.Type, context: Context? = nil) {
         let viewController = screen.construct(context)
         
         switch transition {
@@ -69,7 +69,7 @@ public struct Waymark {
     
     // MARK: - Routes
     
-    public static func addPath(path: String, screen: Screen, transition: Transition, anArgumentsParser: ArgumentsParser? = nil, anArgumentsProcessor: ArgumentsProcessor? = nil) {
+    public static func addPath(path: String, screen: Screen.Type, transition: Transition, anArgumentsParser: ArgumentsParser? = nil, anArgumentsProcessor: ArgumentsProcessor? = nil) {
         if getRoute(path) == nil {
             let argumentsParser = anArgumentsParser ?? DefaultArgumentsParser()
             let argumentsProcessor = anArgumentsProcessor ?? DefaultArgumentsProcessor()
