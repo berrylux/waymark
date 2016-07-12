@@ -17,9 +17,7 @@
 		F0BF1C821D21CEBF00F5B42B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0BF1C801D21CEBF00F5B42B /* Main.storyboard */; };
 		F0BF1C841D21CEBF00F5B42B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0BF1C831D21CEBF00F5B42B /* Assets.xcassets */; };
 		F0BF1C871D21CEBF00F5B42B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0BF1C851D21CEBF00F5B42B /* LaunchScreen.storyboard */; };
-		F0BF1CA61D21D07C00F5B42B /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF1C9F1D21D07C00F5B42B /* Context.swift */; };
 		F0BF1CA71D21D07C00F5B42B /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF1CA01D21D07C00F5B42B /* Screen.swift */; };
-		F0BF1CA81D21D07C00F5B42B /* ScreenConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF1CA11D21D07C00F5B42B /* ScreenConstructor.swift */; };
 		F0BF1CAA1D21D07C00F5B42B /* UINavigationControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF1CA31D21D07C00F5B42B /* UINavigationControllerExtensions.swift */; };
 		F0BF1CAB1D21D07C00F5B42B /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF1CA41D21D07C00F5B42B /* UIViewControllerExtensions.swift */; };
 		F0BF1CAC1D21D07C00F5B42B /* Waymark.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF1CA51D21D07C00F5B42B /* Waymark.swift */; };
@@ -38,9 +36,7 @@
 		F0BF1C831D21CEBF00F5B42B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F0BF1C861D21CEBF00F5B42B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F0BF1C881D21CEBF00F5B42B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F0BF1C9F1D21D07C00F5B42B /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		F0BF1CA01D21D07C00F5B42B /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
-		F0BF1CA11D21D07C00F5B42B /* ScreenConstructor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenConstructor.swift; sourceTree = "<group>"; };
 		F0BF1CA31D21D07C00F5B42B /* UINavigationControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationControllerExtensions.swift; sourceTree = "<group>"; };
 		F0BF1CA41D21D07C00F5B42B /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		F0BF1CA51D21D07C00F5B42B /* Waymark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waymark.swift; sourceTree = "<group>"; };
@@ -93,9 +89,7 @@
 				F0BF1CA31D21D07C00F5B42B /* UINavigationControllerExtensions.swift */,
 				F0BF1CA41D21D07C00F5B42B /* UIViewControllerExtensions.swift */,
 				B9A0588A1D252E1100F77497 /* StringExtensions.swift */,
-				F0BF1C9F1D21D07C00F5B42B /* Context.swift */,
 				F0BF1CA01D21D07C00F5B42B /* Screen.swift */,
-				F0BF1CA11D21D07C00F5B42B /* ScreenConstructor.swift */,
 				F0BF1CA51D21D07C00F5B42B /* Waymark.swift */,
 				B9A058791D23DCC800F77497 /* Transition.swift */,
 				B9A0587B1D23DD4500F77497 /* Route.swift */,
@@ -184,8 +178,6 @@
 				F0BF1CAC1D21D07C00F5B42B /* Waymark.swift in Sources */,
 				B9A0587C1D23DD4500F77497 /* Route.swift in Sources */,
 				F0BF1CAA1D21D07C00F5B42B /* UINavigationControllerExtensions.swift in Sources */,
-				F0BF1CA61D21D07C00F5B42B /* Context.swift in Sources */,
-				F0BF1CA81D21D07C00F5B42B /* ScreenConstructor.swift in Sources */,
 				F0BF1C7F1D21CEBF00F5B42B /* ViewController.swift in Sources */,
 				F0BF1C7D1D21CEBF00F5B42B /* AppDelegate.swift in Sources */,
 				B9A0588B1D252E1100F77497 /* StringExtensions.swift in Sources */,

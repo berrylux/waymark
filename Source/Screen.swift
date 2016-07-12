@@ -25,6 +25,6 @@
 import UIKit
 
 public protocol Screen {
-    associatedtype Model
-    static func construct(context: Model?) -> UIViewController
+    associatedtype Context
+    static func construct(context: Context?) -> UIViewController
 }

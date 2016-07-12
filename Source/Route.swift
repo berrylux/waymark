@@ -38,15 +38,15 @@ public struct Route {
     
     // MARK: - Constructors
     
-//    init(path: String, screen: Screen.Type, transition: Transition, argumentsParser: ArgumentsParser, argumentsProcessor: ArgumentsProcessor) {
-//        self.path = path
+    init<S where S: Screen>(path: String, screen: S.Type, transition: Transition, argumentsParser: ArgumentsParser, argumentsProcessor: ArgumentsProcessor) {
+        self.path = path
 //        self.screen = screen
-//        self.transition = transition
-//        self.argumentsParser = argumentsParser
-//        self.argumentsProcessor = argumentsProcessor
-//        
-//        format = self.argumentsParser.format(path)
-//    }
+        self.transition = transition
+        self.argumentsParser = argumentsParser
+        self.argumentsProcessor = argumentsProcessor
+        
+        format = self.argumentsParser.format(path)
+    }
     
     // MARK: - Methods
     
