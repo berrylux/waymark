@@ -29,7 +29,7 @@ public struct Route {
     // MARK: - Vars
     
     public var path: String!
-    public var screen: Screen.Type!
+//    public var screen: Screen.Type!
     public var transition: Transition!
     private var argumentsParser: ArgumentsParser!
     private var argumentsProcessor: ArgumentsProcessor!
@@ -38,19 +38,19 @@ public struct Route {
     
     // MARK: - Constructors
     
-    init(path: String, screen: Screen.Type, transition: Transition, argumentsParser: ArgumentsParser, argumentsProcessor: ArgumentsProcessor) {
-        self.path = path
-        self.screen = screen
-        self.transition = transition
-        self.argumentsParser = argumentsParser
-        self.argumentsProcessor = argumentsProcessor
-        
-        format = self.argumentsParser.format(path)
-    }
+//    init(path: String, screen: Screen.Type, transition: Transition, argumentsParser: ArgumentsParser, argumentsProcessor: ArgumentsProcessor) {
+//        self.path = path
+//        self.screen = screen
+//        self.transition = transition
+//        self.argumentsParser = argumentsParser
+//        self.argumentsProcessor = argumentsProcessor
+//        
+//        format = self.argumentsParser.format(path)
+//    }
     
     // MARK: - Methods
     
-    func getContext(path: String) -> Context? {
+    func getContext(path: String) -> Any? {
         if let arguments = argumentsParser.parse(path, format) {
             return argumentsProcessor.resolve(arguments)
         }

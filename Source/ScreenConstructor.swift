@@ -24,4 +24,4 @@
 
 import UIKit
 
-public typealias ScreenConstructor = (Context?) -> UIViewController
+public typealias ScreenConstructor = (Any?) -> UIViewController

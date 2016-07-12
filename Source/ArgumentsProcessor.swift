@@ -23,11 +23,11 @@
 //
 
 public protocol ArgumentsProcessor {
-    func resolve(arguments: [String: AnyObject]) -> Context
+    func resolve(arguments: [String: AnyObject]) -> Any
 }
 
 public extension ArgumentsProcessor {
-    public func resolve(arguments: [String: AnyObject]) -> Context {
+    public func resolve(arguments: [String: AnyObject]) -> Any {
         return arguments
     }
 }

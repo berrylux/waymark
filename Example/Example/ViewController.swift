@@ -11,7 +11,6 @@ import UIKit
 final class ViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        self.view.backgroundColor = UIColor.redColor()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -20,7 +19,9 @@ final class ViewController: UIViewController {
 }
 
 extension ViewController: Screen {
-    static func construct(_: Context?) -> UIViewController {
-        return ViewController()
+    static func construct(color: UIColor?) -> UIViewController {
+        let vc = ViewController()
+        vc.view.backgroundColor = color
+        return vc
     }
 }

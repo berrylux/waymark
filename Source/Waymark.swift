@@ -40,18 +40,18 @@ public struct Waymark {
     
     // MARK: - Transitioning
     
-    public static func push(screen: Screen.Type, context: Context? = nil, animated: Bool = false, completion: (() -> ())? = nil) {
+    public static func push<T:Screen>(screen: T.Type, model: T.Model? = nil, animated: Bool = false, completion: (() -> ())? = nil) {
         let transition = Transition.Push(animated: animated, completion: completion)
-        processTransition(transition, screen: screen, context: context)
+        processTransition(transition, screen: screen, model: model)
     }
     
-    public static func present(screen: Screen.Type, context: Context? = nil, animated: Bool = false, completion: (() -> ())? = nil) {
+    public static func present<T:Screen>(screen: T.Type, model: T.Model? = nil, animated: Bool = false, completion: (() -> ())? = nil) {
         let transition = Transition.Present(animated: animated, completion: completion)
-        processTransition(transition, screen: screen, context: context)
+        processTransition(transition, screen: screen, model: model)
     }
     
-    private static func processTransition(transition: Transition, screen: Screen.Type, context: Context? = nil) {
-        let viewController = screen.construct(context)
+    private static func processTransition<T:Screen>(transition: Transition, screen: T.Type, model: T.Model? = nil) {
+        let viewController = screen.construct(model)
         
         switch transition {
         case let .Push(animated, completion):
@@ -69,30 +69,30 @@ public struct Waymark {
     
     // MARK: - Routes
     
-    public static func addPath(path: String, screen: Screen.Type, transition: Transition, anArgumentsParser: ArgumentsParser? = nil, anArgumentsProcessor: ArgumentsProcessor? = nil) {
-        if getRoute(path) == nil {
-            let argumentsParser = anArgumentsParser ?? DefaultArgumentsParser()
-            let argumentsProcessor = anArgumentsProcessor ?? DefaultArgumentsProcessor()
-            let route = Route(
-                path: path,
-                screen: screen,
-                transition: transition,
-                argumentsParser: argumentsParser,
-                argumentsProcessor: argumentsProcessor
-            )
-            
-            routes.append(route)
-        } else {
-            print("Failed to create and add route with path: \(path). Route with this path already exists.")
-        }
-    }
+//    public static func addPath(path: String, screen: Screen.Type, transition: Transition, anArgumentsParser: ArgumentsParser? = nil, anArgumentsProcessor: ArgumentsProcessor? = nil) {
+//        if getRoute(path) == nil {
+//            let argumentsParser = anArgumentsParser ?? DefaultArgumentsParser()
+//            let argumentsProcessor = anArgumentsProcessor ?? DefaultArgumentsProcessor()
+//            let route = Route(
+//                path: path,
+//                screen: screen,
+//                transition: transition,
+//                argumentsParser: argumentsParser,
+//                argumentsProcessor: argumentsProcessor
+//            )
+//            
+//            routes.append(route)
+//        } else {
+//            print("Failed to create and add route with path: \(path). Route with this path already exists.")
+//        }
+//    }
     
     public static func processUrl(url: NSURL) {
         let path = url.absoluteString
         
         for route in routes {
             if let context = route.getContext(path) {
-                processTransition(route.transition, screen: route.screen, context: context)
+//                processTransition(route.transition, screen: route.screen.type, context: context)
                 break
             }
         }
