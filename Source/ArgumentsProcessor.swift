@@ -23,13 +23,14 @@
 //
 
 public protocol ArgumentsProcessor {
-    func resolve(arguments: [String: AnyObject]) -> Any
+    associatedtype Context
+    func resolve(arguments: [String: AnyObject]?) -> Context
 }
 
-public extension ArgumentsProcessor {
-    public func resolve(arguments: [String: AnyObject]) -> Any {
+public struct DefaultArgumentsProcessor: ArgumentsProcessor {
+    
+    public func resolve(arguments: [String: AnyObject]?) -> [String: AnyObject]? {
         return arguments
     }
+    
 }
-
-public struct DefaultArgumentsProcessor: ArgumentsProcessor {}
