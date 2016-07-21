@@ -92,10 +92,8 @@ public struct Waymark {
     }
 
     public static func processUrl(url: NSURL) {
-        let path = url.absoluteString
-
         for route in routes {
-            self.processTransitionForViewController(route.constructScreenWithContextFromPath(path), transition: route.transition)
+            self.processTransitionForViewController(route.construct(url), transition: route.transition)
         }
     }
 

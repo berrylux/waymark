@@ -26,11 +26,3 @@ public protocol ArgumentsProcessor {
     associatedtype Context
     func resolve(arguments: [String: AnyObject]?) -> Context
 }
-
-public struct DefaultArgumentsProcessor: ArgumentsProcessor {
-    
-    public func resolve(arguments: [String: AnyObject]?) -> [String: AnyObject]? {
-        return arguments
-    }
-    
-}

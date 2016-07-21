@@ -29,10 +29,11 @@ public struct Route {
     // MARK: - Vars
 
     public var path: String!
-    public var constructScreenWithContextFromPath: ((String) -> UIViewController)!
     public var transition: Transition!
     
     private var argumentsParser: ArgumentsParser!
+    
+    public private(set) var construct: ((NSURL) -> UIViewController)!
 
     // MARK: - Constructors
 
@@ -43,8 +44,8 @@ public struct Route {
         self.argumentsParser = argumentsParser
 
         self.argumentsParser.registerFormat(path)
-        constructScreenWithContextFromPath = { pathURLString in
-            let arguments = self.argumentsParser.parse(path)
+        construct = { URL in
+            let arguments = self.argumentsParser.parse(URL.absoluteString)
             let context = argumentsProcessor.resolve(arguments)
             return screen.construct(context)
         }

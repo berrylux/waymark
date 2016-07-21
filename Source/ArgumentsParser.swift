@@ -26,6 +26,7 @@ import Foundation
 
 public protocol ArgumentsParser {
     var format: String! { get set }
+    
     mutating func registerFormat(path: String)
     func parse(path: String) -> [String: AnyObject]?
 }
