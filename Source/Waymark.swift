@@ -25,34 +25,37 @@
 import UIKit
 
 public struct Waymark {
-    
+
     // MARK: - Vars
-    
+
     private static var root: UINavigationController?
-    
+
     private static var routes = [Route]()
-    
+
     // MARK: - Setup
-    
+
     public static func setup(aRoot: UINavigationController) {
         root = aRoot
     }
-    
+
     // MARK: - Transitioning
-    
+
     public static func push<S where S: Screen>(screen: S.Type, context: S.Context? = nil, animated: Bool = false, completion: (() -> ())? = nil) {
         let transition = Transition.Push(animated: animated, completion: completion)
-        processTransition(transition, screen: screen, context: context)
+        processTransitionForScreen(screen, context: context, transition: transition)
     }
-    
+
     public static func present<S where S: Screen>(screen: S.Type, context: S.Context? = nil, animated: Bool = false, completion: (() -> ())? = nil) {
         let transition = Transition.Present(animated: animated, completion: completion)
-        processTransition(transition, screen: screen, context: context)
+        processTransitionForScreen(screen, context: context, transition: transition)
     }
-    
-    private static func processTransition<S where S: Screen>(transition: Transition, screen: S.Type, context: S.Context? = nil) {
+
+    private static func processTransitionForScreen<S where S: Screen>(screen: S.Type, context: S.Context? = nil, transition: Transition) {
         let viewController = screen.construct(context)
-        
+        self.processTransitionForViewController(viewController, transition: transition)
+    }
+
+    private static func processTransitionForViewController(viewController: UIViewController, transition: Transition) {
         switch transition {
         case let .Push(animated, completion):
             root?.pushViewController(viewController, animated: animated, completion: completion)
@@ -62,13 +65,13 @@ public struct Waymark {
             break
         }
     }
-    
+
     public static func dismiss(animated: Bool = false, completion: (() -> ())? = nil) {
         root?.top.dismissViewControllerAnimated(animated, completion: completion)
     }
-    
+
     // MARK: - Routes
-    
+
     public static func addPath<S where S: Screen>(path: String, screen: S.Type, transition: Transition, anArgumentsParser: ArgumentsParser? = nil, anArgumentsProcessor: ArgumentsProcessor? = nil) {
         if getRoute(path) == nil {
             let argumentsParser = anArgumentsParser ?? DefaultArgumentsParser()
@@ -80,26 +83,23 @@ public struct Waymark {
                 argumentsParser: argumentsParser,
                 argumentsProcessor: argumentsProcessor
             )
-            
+
             routes.append(route)
         } else {
             print("Failed to create and add route with path: \(path). Route with this path already exists.")
         }
     }
-    
+
     public static func processUrl(url: NSURL) {
         let path = url.absoluteString
-        
+
         for route in routes {
-            if let context = route.getContext(path) {
-//                processTransition(route.transition, screen: route.screen.type, context: context)
-                break
-            }
+            self.processTransitionForViewController(route.constructScreenWithContextFromPath(path), transition: route.transition)
         }
     }
-    
+
     public static func getRoute(path: String) -> Route? {
         return routes.filter { $0.path == path }.first
     }
-    
+
 }

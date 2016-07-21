@@ -25,36 +25,40 @@
 import UIKit
 
 public struct Route {
-    
+
     // MARK: - Vars
-    
+
     public var path: String!
-//    public var screen: Screen.Type!
+    public var constructScreenWithContextFromPath: ((String) -> UIViewController)!
     public var transition: Transition!
     private var argumentsParser: ArgumentsParser!
     private var argumentsProcessor: ArgumentsProcessor!
-    
+
     public var format: String!
-    
+
     // MARK: - Constructors
-    
+
     init<S where S: Screen>(path: String, screen: S.Type, transition: Transition, argumentsParser: ArgumentsParser, argumentsProcessor: ArgumentsProcessor) {
         self.path = path
-//        self.screen = screen
+
         self.transition = transition
         self.argumentsParser = argumentsParser
         self.argumentsProcessor = argumentsProcessor
-        
+
         format = self.argumentsParser.format(path)
+        self.constructScreenWithContextFromPath = { pathURLString in
+            let typelessContext = self.getContext(pathURLString) // TODO: make argument parser and processor generic with type of S.Context so that we don't loose context type information
+            return screen.construct((typelessContext as! S.Context))
+        }
     }
-    
+
     // MARK: - Methods
-    
+
     func getContext(path: String) -> Any? {
         if let arguments = argumentsParser.parse(path, format) {
             return argumentsProcessor.resolve(arguments)
         }
         return nil
     }
-    
+
 }
