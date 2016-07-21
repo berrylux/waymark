@@ -25,19 +25,21 @@
 import Foundation
 
 public protocol ArgumentsParser {
-    mutating func format(path: String) -> String
-    func parse(path: String, _ format: String) -> [String: AnyObject]?
+    var format: String! { get set }
+    mutating func registerFormat(path: String)
+    func parse(path: String) -> [String: AnyObject]?
 }
 
 public struct DefaultArgumentsParser: ArgumentsParser {
     
     // MARK: - Vars
     
-    public var argumentsTitles: [String] = []
+    private var argumentsTitles: [String] = []
+    public var format: String! = ""
     
     // MARK: - ArgumentsParser
     
-    public mutating func format(path: String) -> String {
+    public mutating func registerFormat(path: String) { // TODO: Dont like this name
         var format = path.stringByReplacingOccurrencesOfString("/", withString: "\\/").stringByReplacingOccurrencesOfString("?", withString: "\\?")
         var argumentRanges = [Range<Int>]()
         
@@ -66,11 +68,9 @@ public struct DefaultArgumentsParser: ArgumentsParser {
             argumentsTitles.append(format.substringWithRange(range).remove("{}"))
             format = format.stringByReplacingCharactersInRange(range, withString: regexAny)
         }
-        
-        return format
     }
     
-    public func parse(path: String, _ format: String) -> [String: AnyObject]? {
+    public func parse(path: String) -> [String: AnyObject]? {
         do {
             let regex = try NSRegularExpression(pattern: format, options: NSRegularExpressionOptions.CaseInsensitive)
             let range = NSMakeRange(0, path.characters.count)

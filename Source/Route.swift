@@ -42,9 +42,9 @@ public struct Route {
         self.transition = transition
         self.argumentsParser = argumentsParser
 
-        let format = self.argumentsParser.format(path)
+        self.argumentsParser.registerFormat(path)
         constructScreenWithContextFromPath = { pathURLString in
-            let arguments = self.argumentsParser.parse(path, format)
+            let arguments = self.argumentsParser.parse(path)
             let context = argumentsProcessor.resolve(arguments)
             return screen.construct(context)
         }
