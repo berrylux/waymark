@@ -26,13 +26,33 @@ import Foundation
 
 public extension String {
     
-    public func substringWithRange(range: NSRange) -> String {
+    public var fullRange: NSRange {
+        return NSMakeRange(0, length)
+    }
+    
+    public var length: Int {
+        return characters.count
+    }
+    
+    public func substring(aRange: Range<Index>) -> String {
+        return substringWithRange(aRange)
+    }
+    
+    public func substring(range: NSRange) -> String {
         return (self as NSString).substringWithRange(range)
     }
     
-    public func remove(chars: String) -> String {
+    public func removeChars(chars: String) -> String {
         let toRemove = NSCharacterSet(charactersInString: chars)
         return self.componentsSeparatedByCharactersInSet(toRemove).joinWithSeparator("")
+    }
+    
+    public func replace(toReplace: String, with replacement: String) -> String {
+        return stringByReplacingOccurrencesOfString(toReplace, withString: replacement)
+    }
+    
+    public func replace(range range: Range<Index>, with replacement: String) -> String {
+        return stringByReplacingCharactersInRange(range, withString: replacement)
     }
     
 }

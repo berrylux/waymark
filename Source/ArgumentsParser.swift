@@ -41,7 +41,7 @@ public struct DefaultArgumentsParser: ArgumentsParser {
     // MARK: - ArgumentsParser
     
     public mutating func registerFormat(path: String) { // TODO: Dont like this name
-        var format = path.stringByReplacingOccurrencesOfString("/", withString: "\\/").stringByReplacingOccurrencesOfString("?", withString: "\\?")
+        var format = path.replace("/", with: "\\/").replace("?", with: "\\?")
         var argumentRanges = [Range<Int>]()
         
         var latestRange: Range<Int>?
@@ -55,33 +55,34 @@ public struct DefaultArgumentsParser: ArgumentsParser {
             }
         }
         
-        let initialFormatLength = format.characters.count
+        let initialFormatLength = format.length
         
         // TODO: Extend regex?, maybe change to (\\w+)
         let regexAny = "([а-яА-Яa-zA-Z0-9_]+)"
         for range in argumentRanges {
-            let advanceBy = format.characters.count - initialFormatLength
+            let advanceBy = format.length - initialFormatLength
             
             let startIndex = format.characters.startIndex.advancedBy(range.startIndex + advanceBy)
             let endIndex = format.characters.startIndex.advancedBy(range.endIndex + advanceBy)
-            let range = startIndex ... endIndex
+            let adjustedRange = startIndex ... endIndex
             
-            argumentsTitles.append(format.substringWithRange(range).remove("{}"))
-            format = format.stringByReplacingCharactersInRange(range, withString: regexAny)
+            let title = format.substring(adjustedRange).removeChars("{}")
+            argumentsTitles.append(title)
+            format = format.replace(range: adjustedRange, with: regexAny)
         }
     }
     
     public func parse(path: String) -> [String: AnyObject]? {
         do {
-            let regex = try NSRegularExpression(pattern: format, options: NSRegularExpressionOptions.CaseInsensitive)
-            let range = NSMakeRange(0, path.characters.count)
+            let regex = try NSRegularExpression(pattern: format, options: .CaseInsensitive)
+            let range = path.fullRange
             if let textCheckingResults = regex.firstMatchInString(path, options: [], range: range) where textCheckingResults.numberOfRanges > 1 {
                 
                 var values = [String: AnyObject]()
                 
                 for index in 1 ..< textCheckingResults.numberOfRanges where index <= argumentsTitles.count {
                     let title = argumentsTitles[index - 1]
-                    values[title] = path.substringWithRange(textCheckingResults.rangeAtIndex(index))
+                    values[title] = path.substring(textCheckingResults.rangeAtIndex(index))
                 }
                 
                 return values
