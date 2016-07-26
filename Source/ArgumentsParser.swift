@@ -25,9 +25,7 @@
 import Foundation
 
 public protocol ArgumentsParser {
-    var format: String! { get set }
-    
-    mutating func registerFormat(path: String)
+    init(path: String)
     func parse(path: String) -> [String: AnyObject]?
 }
 
@@ -36,11 +34,11 @@ public struct DefaultArgumentsParser: ArgumentsParser {
     // MARK: - Vars
     
     private var argumentsTitles: [String] = []
-    public var format: String! = ""
+    private var format: String! = ""
     
     // MARK: - ArgumentsParser
     
-    public mutating func registerFormat(path: String) { // TODO: Dont like this name
+    public init(path: String) { // TODO: Dont like this name
         var format = path.replace("/", with: "\\/").replace("?", with: "\\?")
         var argumentRanges = [Range<Int>]()
         

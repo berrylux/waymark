@@ -72,11 +72,8 @@ public struct Waymark {
 
     // MARK: - Routes
 
-    public static func addPath<S: Screen, AP: ArgumentsProcessor where S.Context == AP.Context>(path: String, screen: S.Type, transition: Transition, argumentsParser: ArgumentsParser = DefaultArgumentsParser(), argumentsProcessor: AP) {
+    public static func addPath<S: Screen, AP: ArgumentsProcessor where S.Context == AP.Context>(path: String, screen: S.Type, transition: Transition, argumentsParser: ArgumentsParser.Type = DefaultArgumentsParser.self, argumentsProcessor: AP) {
         if getRoute(path) == nil {
-            
-            // TODO: Need somehow to allow not force always setting argumentsProcessor
-            // We have a default processor and want to set that by default
             let route = Route(
                 path: path,
                 screen: screen,

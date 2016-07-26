@@ -37,13 +37,12 @@ public struct Route {
 
     // MARK: - Constructors
 
-    init<S: Screen, AP: ArgumentsProcessor where S.Context == AP.Context>(path: String, screen: S.Type, transition: Transition, argumentsParser: ArgumentsParser, argumentsProcessor: AP) {
+    init<S: Screen, AP: ArgumentsProcessor where S.Context == AP.Context>(path: String, screen: S.Type, transition: Transition, argumentsParser: ArgumentsParser.Type, argumentsProcessor: AP) {
         self.path = path
 
         self.transition = transition
-        self.argumentsParser = argumentsParser
+        self.argumentsParser = argumentsParser.init(path: path)
 
-        self.argumentsParser.registerFormat(path)
         construct = { URL in
             let arguments = self.argumentsParser.parse(URL.absoluteString)
             let context = argumentsProcessor.resolve(arguments)
